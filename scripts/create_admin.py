@@ -5,14 +5,14 @@ import getpass
 import sys
 
 from app.core.security import hash_password
-from app.database.db import SessionLocal, init_db
+from app.database.db import get_session_local, init_db
 from app.models.admin import Admin
 from app.services.admin_service import get_admin_by_email
 
 
 def create_admin(username: str, email: str, password: str) -> None:
     init_db()
-    db = SessionLocal()
+    db = get_session_local()()
 
     try:
         if get_admin_by_email(db, email):
